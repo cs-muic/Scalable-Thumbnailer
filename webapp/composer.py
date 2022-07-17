@@ -6,13 +6,7 @@ from redisconn import setkeyval,work_queue
 from rq import Queue
 from pathlib import Path
 from minio import Minio
-
-client = Minio(
-        "host.docker.internal:9000",
-        access_key="minio",
-        secret_key="minio123",
-        secure=False
-    )
+from miniocon import client
 
 def composing(output,id):
     framepath = f'frames/{id}'
