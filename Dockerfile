@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
 COPY /webapp /app
+COPY /webapp/requirements.txt /app/requirements.txt
 WORKDIR /app
 
 RUN mkdir frames
