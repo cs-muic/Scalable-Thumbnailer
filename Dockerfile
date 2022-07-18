@@ -16,7 +16,7 @@ RUN apt-get install -y python3-pip
 RUN apt-get install -y ffmpeg    
 RUN apt-get install -y imagemagick
 
-COPY /webapp/requirements.txt /app/requirements.txt
+
 
 RUN pip3 install -r /app/requirements.txt
 
