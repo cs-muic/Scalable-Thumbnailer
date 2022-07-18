@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
 COPY /webapp /app
+COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 
 RUN mkdir frames
@@ -16,7 +17,7 @@ RUN apt-get install -y python3-pip
 RUN apt-get install -y ffmpeg    
 RUN apt-get install -y imagemagick
 
-COPY requirements.txt /app/requirements.txt
+
 
 RUN pip3 install -r /app/requirements.txt
 
