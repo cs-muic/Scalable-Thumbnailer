@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 COPY /webapp /app
-COPY /webapp/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 
 RUN mkdir frames
@@ -19,6 +19,12 @@ RUN apt-get install -y imagemagick
 
 
 
-RUN pip3 install -r /app/requirements.txt
+RUN pip3 install Flask
+RUN pip3 install minio
+RUN pip3 install redis
+RUN pip3 install rq
+RUN pip3 install gunicorn
+
 
 CMD ["gunicorn", "-b 0.0.0.0:5000", "-w 2", "app:app"]
+
