@@ -23,5 +23,5 @@ RUN pip3 install redis
 RUN pip3 install rq
 RUN pip3 install gunicorn
 
-
 CMD ["gunicorn", "-b 0.0.0.0:5000", "-w 2", "app:app"]
+
