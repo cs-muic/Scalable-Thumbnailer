@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+   <body>
+      <h1> Control Center </h1>
+      <form action="http://localhost:80/trackprogress/" method = "post" id ="track">
+            Get progress by ID
+            <br>
+            <input type="text" name="jobId">
+            <br>
+            <br>
+            <input type="submit" value="Get Progress" style ="background-color:lightblue"/>
+         </form>
+         <h3> All Videos </h3>
+      
+               <form action = "http://localhost:80/convertall" method = "post">
+            <p><input type = "submit" value = "Make all to GIF" style ="background-color:lightgreen"/></p>
+         </form>
+         
+         <table>
+              {% for obj in objects %}
+               <tr>
+                  <th>
+                     <h4> {{obj}} </h4>
+                  </th>
+                  <th>
+                     <form action = "http://localhost:80/convert/{{obj}}" method = "post">
+                        <p><input type = "submit" value = "Make GIF" style ="background-color:lightgreen"/></p>
+                     </form>
+                  </th>
+               </tr>
+      
+              {% endfor %}
+         </table>
+         <script>
+            document.getElementById("track").onsubmit = function() {
+               this.setAttribute('action', "http://localhost:80/trackprogress/" + document.querySelector('input[name=jobId]').value)
+            }
+         </script> 
+   </body>
+</html>

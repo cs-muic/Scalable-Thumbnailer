@@ -1,11 +1,11 @@
 import redis
 import json
 
-from flask import Flask,redirect
+from flask import Flask,redirect,render_template
 from rq import Queue
 from minio import Minio
 from extractor import extraction
-from redisconn import ex_queue,setkeyval,getval,id_queue
+from redisconn import ex_queue,setkeyval,getval,id_queue,r
 from miniocon import client
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def allvideos():
     for video in videos:
         name = video.object_name
         allvidsname.append(name)
-    return allvidsname
+    return render_template("control.html", bucket_name = "video", objects = allvidsname)
 
 #Api that return the list of all gifs that is present in the bucket gifs of minio
 @app.route('/allgifs', methods=['POST', 'GET'])
@@ -39,7 +39,7 @@ def allgifs():
     for gif in gifs:
         name = gif.object_name
         allgifsname.append(name)
-    return allgifsname
+    return render_template("display.html", bucket_name = "gifs", objects = allgifsname)
 
 #API that deletes a particular gif
 @app.route("/delete/<gif>", methods = ['POST'])
@@ -61,7 +61,7 @@ def convert(input):
     name = input.split(".")
     output = name[0] + ".gif"
 
-    id=getval("currentId")
+    id=int(getval("currentId"))
     id_queue.enqueue(setkeyval,"currentID",str(id+1))
     ex_queue.enqueue(setkeyval, id, "Start downloading video")
     ex_queue.enqueue(extraction, input, output, id)
@@ -77,7 +77,7 @@ def convertall():
         vidname=video.object_name
         name = vidname.split(".")
         output = name[0] + ".gif"
-        id=getval("currentId")
+        id=int(getval("currentId"))
         id_queue.enqueue(setkeyval,"currentID",str(id+1))
         ex_queue.enqueue(setkeyval, id, "Start downloading video")
         ex_queue.enqueue(extraction, video, output, id)
@@ -98,7 +98,7 @@ def home():
     if not client.bucket_exists("gif"):
         client.make_bucket("gif")
     
-    return redirect("http://localhost:80/allvideos")
+    return render_template("home.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

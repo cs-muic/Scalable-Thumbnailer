@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+   <body>
+      <h1> Display Room </h1>
+         <h3> ALL GIFS </h3>
+      
+               <form action = "http://localhost:80/deleteall" method = "post">
+            <p><input type = "submit" value = "Delete All GIFs" style ="background-color:red"/></p>
+         </form>
+         
+         <table>
+              {% for obj in objects %}
+               <tr>
+              
+                  <th>
+                            <img src="http://localhost:9000/{{bucket_name}}/{{obj}}" alt="{{obj}}">
+                  </th>
+                  <th>
+                     <h4> {{obj}} </h4>
+                  </th>
+                  <th>
+                     <form action = "http://localhost:80/delete" method = "post">
+                        <p><input type = "submit" value = "Delete GIF" style ="background-color:red"/></p>
+                     </form>
+                  </th>
+               </tr>
+      
+              {% endfor %}
+         </table>
+   </body>
+</html>

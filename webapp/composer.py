@@ -2,7 +2,7 @@ import subprocess
 import redis
 import os
 
-from redisconn import setkeyval,work_queue
+from redisconn import setkeyval,ex_queue
 from rq import Queue
 from pathlib import Path
 from minio import Minio
@@ -28,7 +28,7 @@ def composing(output,id):
     
     client.fput_object("gif", output, f'{gifpath}/{output}')
 
-    work_queue.enqueue(setkeyval,id,"Compising process finished successfully")
+    ex_queue.enqueue(setkeyval,id,"Compising process finished successfully")
 
 
     
