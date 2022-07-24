@@ -16,10 +16,9 @@ def extraction(input,output,id):
     if not(os.path.exists(vidpath)):
         Path(f'video/{id}').mkdir(parents=True,exist_ok=True)
         client.fget_object("video", input, vidpath)
-        print("Successfully got the video")
 
     if not(os.path.exists(framepath)):
-        Path(f'frames/{id}').mkdir(parents=True,exist_ok=True)
+        Path(framepath).mkdir(parents=True,exist_ok=True)
         
     cmd1=f'ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 video/{vidpath}'
     runcmd1= subprocess.run(cmd1, shell=True, stdout=subprocess.PIPE)

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webappdeploy
+  name: worker1deploy
   labels:
-    app: webappdeploy
+    app: worker1deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webappdeploy
+      app: worker1deploy
   template:
     metadata:
       labels:
-        app: webappdeploy
+        app: worker1deploy
     spec:
       containers:
-      - name: webappdeploy
-        image: ghcr.io/cs-muic/scalable-p2-scalable-t3-harinkha/webappp2image:latest
+      - name: worker1deploy
+        image: ghcr.io/cs-muic/scalable-p2-scalable-t3-harinkha/worker1:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
@@ -41,10 +41,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webappdeploy
+  name: worker1deploy
 spec:
   selector:
-    app: webappdeploy
+    app: worker1deploy
   type: ClusterIP  
   ports:
     - name: http

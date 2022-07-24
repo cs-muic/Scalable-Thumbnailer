@@ -2,6 +2,9 @@
 <html>
    <body>
       <h1> Control Center </h1>
+      <form action = "http://localhost:80/allgifs" method = "get">
+         <p><input type = "submit" value = "To display Room" /></p>
+      </form> 
       <form action="http://localhost:80/trackprogress/" method = "post" id ="track">
             Get progress by ID
             <br>
@@ -17,13 +20,13 @@
          </form>
          
          <table>
-              {% for obj in objects %}
+              {% for input in inputs %}
                <tr>
                   <th>
-                     <h4> {{obj}} </h4>
+                     <h4> {{input}} </h4>
                   </th>
                   <th>
-                     <form action = "http://localhost:80/convert/{{obj}}" method = "post">
+                     <form action = "http://localhost:80/convert/{{input}}" method = "post">
                         <p><input type = "submit" value = "Make GIF" style ="background-color:lightgreen"/></p>
                      </form>
                   </th>

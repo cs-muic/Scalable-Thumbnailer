@@ -29,7 +29,7 @@ def allvideos():
     for video in videos:
         name = video.object_name
         allvidsname.append(name)
-    return render_template("control.html", bucket_name = "video", objects = allvidsname)
+    return render_template("control.html", inputs = allvidsname)
 
 #Api that return the list of all gifs that is present in the bucket gifs of minio
 @app.route('/allgifs', methods=['POST', 'GET'])
@@ -39,7 +39,7 @@ def allgifs():
     for gif in gifs:
         name = gif.object_name
         allgifsname.append(name)
-    return render_template("display.html", bucket_name = "gifs", objects = allgifsname)
+    return render_template("display.html", bucket = "gifs", inputs = allgifsname)
 
 #API that deletes a particular gif
 @app.route("/delete/<gif>", methods = ['POST'])
