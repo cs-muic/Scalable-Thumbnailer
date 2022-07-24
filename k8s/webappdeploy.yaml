@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webappdeploy
+  labels:
+    app: webappdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webappdeploy
+  template:
+    metadata:
+      labels:
+        app: webappdeploy
+    spec:
+      containers:
+      - name: webappdeploy
+        image: ghcr.io/cs-muic/scalable-p2-scalable-t3-harinkha/webappp2image:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5000
+            name: http
+        env:
+        - name: REDIS_HOST
+          value: redisdeployment
+        - name: REDIS_URL      
+          value: redis
+        - name: REDIS_PORT     
+          value: '6379' 
+        - name: MINIO_PORT
+          value: '9000'
+        - name: MINIO_ACCESS_KEY
+          value: minio
+        - name: MINIO_SECRET_KEY
+          value: minio123  
+      imagePullSecrets:
+        - name: secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webappdeploy
+spec:
+  selector:
+    app: webappdeploy
+  type: ClusterIP  
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
